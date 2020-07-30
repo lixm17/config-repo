@@ -72,13 +72,20 @@ public abstract class AbstractRefreshContent implements ApplicationContextAware,
         return false;
     }
 
+    /**
+     * @Value和environment.getProperty("name")会从
+     * List<PropertySource<?>> propertySourceList = new CopyOnWriteArrayList<>()
+     * 遍历，取到key立即返回；因此将自定义OriginTrackedMapPropertySource配置文件放到开头；
+     * 以从自定义配置文件取得为准
+     */
     private void createZkSpringProperty() {
         //封装了application.properties里面所有的属性
         MutablePropertySources propertySources = configurableApplicationContext.getEnvironment().getPropertySources();
         //自定义容器存放zk里面的配置属性
         OriginTrackedMapPropertySource zkSource=new OriginTrackedMapPropertySource(zkPropertyName,map);
 
-        propertySources.addLast(zkSource);
+        propertySources.addFirst(zkSource);
+//        propertySources.addLast(zkSource);
     }
 
     @Override
