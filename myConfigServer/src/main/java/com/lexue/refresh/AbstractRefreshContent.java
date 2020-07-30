@@ -83,7 +83,6 @@ public abstract class AbstractRefreshContent implements ApplicationContextAware,
         MutablePropertySources propertySources = configurableApplicationContext.getEnvironment().getPropertySources();
         //自定义容器存放zk里面的配置属性
         OriginTrackedMapPropertySource zkSource=new OriginTrackedMapPropertySource(zkPropertyName,map);
-
         propertySources.addFirst(zkSource);
 //        propertySources.addLast(zkSource);
     }
