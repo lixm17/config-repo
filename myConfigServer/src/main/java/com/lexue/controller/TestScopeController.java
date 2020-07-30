@@ -1,5 +1,6 @@
 package com.lexue.controller;
 
+import com.lexue.service.TestService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,19 +23,30 @@ public class TestScopeController {
     @Value("${name:jack}")
     private String username;
 
+    @Value("${spring.cloud.config.server.git.search-paths:config}")
+    private String path;
+
     @Autowired
     private Environment environment;
+
+    @Autowired
+    private TestService testService;
 
     @RequestMapping("/testScope")
     @ResponseBody
     private String testEnv(){
 
         log.info("---------TestScopeController-----------"+this.hashCode());
-        String name = environment.getProperty("name");
-        String pwd = environment.getProperty("pwd");
-        log.info(name);
-        log.info(pwd);
+        log.info(environment.getProperty("name"));
+        log.info(environment.getProperty("spring.cloud.config.server.git.uri"));
+        log.info(environment.getProperty("spring.redis.password1"));
+        log.info(environment.getProperty("spring.cloud.config.server.git.search-paths"));
+
         log.info("@Value:"+username);
+        log.info("@Value:"+path);
+
+        log.info("---------------------------------------------");
+        testService.testServiceValue();
         return "1";
     }
 }
