@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
 @Scope("refresh")
 public class TestServiceImpl implements TestService {
     private Logger log = org.slf4j.LoggerFactory.getLogger(TestServiceImpl.class);
-    @Value("${spring.cloud.config.server.git.search-paths:config}")
-    private String path;
+    @Value("${name:jack}")
+    private String name;
 
     @Autowired
     private Environment environment;
     @Override
     public void testServiceValue() {
         log.info("servicev@environment:"+environment.getProperty("spring.cloud.config.server.git.search-paths"));
-        log.info("servicev@Value:"+path);
+        log.info("servicev@Value :name==>:"+name);
     }
 }

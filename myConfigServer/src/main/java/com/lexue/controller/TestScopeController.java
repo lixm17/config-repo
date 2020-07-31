@@ -1,5 +1,6 @@
 package com.lexue.controller;
 
+import com.lexue.config.PropertiesConfig;
 import com.lexue.service.TestService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,21 +33,26 @@ public class TestScopeController {
     @Autowired
     private TestService testService;
 
+    @Autowired
+    private PropertiesConfig propertiesConfig;
+
     @RequestMapping("/testScope")
     @ResponseBody
     private String testEnv(){
 
         log.info("---------TestScopeController-----------"+this.hashCode());
-        log.info(environment.getProperty("name"));
+        log.info("environment:name==>"+environment.getProperty("name"));
         log.info(environment.getProperty("spring.cloud.config.server.git.uri"));
         log.info(environment.getProperty("spring.redis.password1"));
         log.info(environment.getProperty("spring.cloud.config.server.git.search-paths"));
 
-        log.info("@Value:"+username);
+        log.info("@Value :name==>:"+username);
         log.info("@Value:"+path);
 
         log.info("---------------------------------------------");
         testService.testServiceValue();
+        log.info("---------------------------------------------");
+        log.info("-----------PropertiesConfig--:name==>---"+propertiesConfig.getUsername());
         return "1";
     }
 }
